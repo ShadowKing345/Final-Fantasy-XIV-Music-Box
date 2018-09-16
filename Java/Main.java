@@ -60,7 +60,7 @@ public class Main extends JFrame{
         {
             try {
                 robot = new Robot();
-                List<MusicalNote> notes = Load.ReadFile("C:\\Users\\alexa\\Desktop\\FF14 Musical instrument robot\\src\\music.txt");
+                List<MusicalNote> notes = Load.ReadFile("Directory of file");
 
                 for (MusicalNote n : notes) {
                     if (n.getOctave().equals("1"))
