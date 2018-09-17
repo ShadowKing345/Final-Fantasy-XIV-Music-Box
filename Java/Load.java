@@ -1,35 +1,27 @@
 package Java;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-class Load {
+class Load{
 
     private static Scanner scanner;
 
-    static List<MusicalNote> ReadFile(String fileLocation){
-        List<MusicalNote> data = new ArrayList<>();
-        openFile(fileLocation);
-        while(scanner.hasNext()){
-           data.add(MusicalNote.parse(scanner.nextLine()));
-        }
-        closeFile();
-        return data;
-    }
-
-    private static void openFile(String filePath){
+    static String ReadFile(String filePath){
         try {
             scanner = new Scanner(new File(filePath));
         } catch (FileNotFoundException e) {
-            System.out.print( filePath + " not found");
+            System.out.print( filePath + " not found\nUsing example note");
+            return "Notes:e Hold:1 Octave:00 PostWait:0";
         }
-    }
 
-    private static void closeFile(){
+        String data = "";
+        while(scanner.hasNext()){
+           data += scanner.nextLine() + "\n";
+        }
         scanner.close();
+        return data;
     }
-
 }

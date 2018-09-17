@@ -2,11 +2,9 @@ package Java;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
 
 class Settings extends JPanel{
 
@@ -126,23 +124,28 @@ class Settings extends JPanel{
             this.button = new JButton();
 
             button.setText(KeyEvent.getKeyText((int) keyBind));
-            button.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    button.addKeyListener(new KeyAdapter() {
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                            keyCode = e.getKeyCode();
-                            button.setText(KeyEvent.getKeyText((int) keyCode));
-                        }
-                    });
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    button.removeKeyListener(button.getKeyListeners()[0]);
-                }
-            });
+            //Disabled till proper key bind method discovered. Use default key binds on US style keyboard.
+//            button.addMouseListener(new MouseAdapter() {
+//                @Override
+//                public void mousePressed(MouseEvent e) {
+//                    button.addKeyListener(new KeyAdapter() {
+//                        @Override
+//                        public void keyPressed(KeyEvent e) {
+//                            keyCode = e.getKeyCode();
+//                            button.setText(KeyEvent.getKeyText((int) keyCode));
+//                        }
+//                    });
+//                    Scanner s = new Scanner(System.in);
+//                    int key = s.nextInt();
+//                    keyCode = key;
+//                    button.setText(String.valueOf(key));
+//                }
+//
+//                @Override
+//                public void mouseReleased(MouseEvent e) {
+//                    button.removeKeyListener(button.getKeyListeners()[0]);
+//                }
+//            });
         }
 
         public void setBounds(int x, int y, int width, int height) {
@@ -177,7 +180,17 @@ class Settings extends JPanel{
     class Thread extends java.lang.Thread {
         @Override
         public void run(){
-            tempo = Integer.parseInt(tempoField.getText());
+            while (true) {
+                String tempoText = tempoField.getText();
+                if (tempoText.equals("") || tempoText.equals("0"))
+                    tempo = 1;
+                else
+                    try {
+                        tempo = Integer.parseInt(tempoText);
+                    } catch (NumberFormatException e) {
+                        tempo = 1;
+                    }
+            }
         }
     }
 

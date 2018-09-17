@@ -2,8 +2,6 @@ package Java;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class Main extends JFrame{
 
@@ -18,7 +16,7 @@ public class Main extends JFrame{
     JTextField fileLocation = new JTextField("File Location");
     JTabbedPane content = new JTabbedPane();
 
-    JPanel display = new JPanel();
+    JPanel display = new Display();
     JPanel setting = new Settings();
 
     private Main() {
@@ -54,110 +52,9 @@ public class Main extends JFrame{
 
     }
 
-    public void StartSequence(int delay) {
-        Robot robot;
-        Delay(delay);
-        {
-            try {
-                robot = new Robot();
-                List<MusicalNote> notes = Load.ReadFile("C:\\Users\\alexa\\Desktop\\FF14 Musical instrument robot\\src\\music.txt");
-
-                for (MusicalNote n : notes) {
-                    if (n.getOctave().equals("1"))
-                        robot.keyPress(KeyEvent.VK_SHIFT);
-
-                    if (n.getOctave().equals("-1"))
-                        robot.keyPress(KeyEvent.VK_CONTROL);
-
-                    switch (n.getNote()) {
-                        case "q":
-                            robot.keyPress(KeyEvent.VK_Q);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_Q);
-                            break;
-                        case "2":
-                            robot.keyPress(KeyEvent.VK_2);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_2);
-                            break;
-                        case "w":
-                            robot.keyPress(KeyEvent.VK_W);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_W);
-                            break;
-                        case "3":
-                            robot.keyPress(KeyEvent.VK_3);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_3);
-                            break;
-                        case "e":
-                            robot.keyPress(KeyEvent.VK_E);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_E);
-                            break;
-                        case "r":
-                            robot.keyPress(KeyEvent.VK_R);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_R);
-                            break;
-                        case "5":
-                            robot.keyPress(KeyEvent.VK_5);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_5);
-                            break;
-                        case "t":
-                            robot.keyPress(KeyEvent.VK_T);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_T);
-                            break;
-                        case "6":
-                            robot.keyPress(KeyEvent.VK_6);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_6);
-                            break;
-                        case "y":
-                            robot.keyPress(KeyEvent.VK_Y);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_Y);
-                            break;
-                        case "7":
-                            robot.keyPress(KeyEvent.VK_7);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_7);
-                            break;
-                        case "u":
-                            robot.keyPress(KeyEvent.VK_U);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_U);
-                            break;
-                        case "i":
-                            robot.keyPress(KeyEvent.VK_I);
-                            robot.delay(n.getTime());
-                            robot.keyRelease(KeyEvent.VK_I);
-                        default:
-                            break;
-                    }
-
-                    robot.keyRelease(KeyEvent.VK_SHIFT);
-                    robot.keyRelease(KeyEvent.VK_CONTROL);
-
-                }
-            } catch (AWTException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
-    private static void Delay(int milliseconds) {
-        try {
-            System.out.println("You have " + milliseconds + " to open ffIV.");
-            Thread.sleep(milliseconds);
-            System.out.println("Begin.");
-        } catch (InterruptedException iex) {
-            System.out.println(iex);
-        }
-    }
+
 
 
     public static void main(String[] arg) {
