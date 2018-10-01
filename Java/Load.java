@@ -24,4 +24,14 @@ class Load{
         scanner.close();
         return data;
     }
+
+    static boolean VerifyFile(String filePath) {
+        try {
+            scanner = new Scanner(new File(filePath));
+        } catch (FileNotFoundException e){
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+        return true;
+    }
 }
