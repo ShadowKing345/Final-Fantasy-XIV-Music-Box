@@ -2,6 +2,7 @@ package Java;
 
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -11,9 +12,9 @@ public class Config {
     String noteC = String.valueOf(KeyEvent.VK_Q), noteCs = String.valueOf(KeyEvent.VK_2), noteD = String.valueOf(KeyEvent.VK_W), noteEb = String.valueOf(KeyEvent.VK_3), noteE = String.valueOf(KeyEvent.VK_E), noteF = String.valueOf(KeyEvent.VK_R), noteFs = String.valueOf(KeyEvent.VK_5),
             noteG = String.valueOf(KeyEvent.VK_T), noteGs = String.valueOf(KeyEvent.VK_6), noteA = String.valueOf(KeyEvent.VK_Y),
             noteB = String.valueOf(KeyEvent.VK_7), noteBb = String.valueOf(KeyEvent.VK_U), noteC1 = String.valueOf(KeyEvent.VK_I),
-            decreseOctave = String.valueOf(KeyEvent.VK_CONTROL), increaseOctave = String.valueOf(KeyEvent.VK_SHIFT), tempo = "2500";
+            decreaseOctave = String.valueOf(KeyEvent.VK_CONTROL), increaseOctave = String.valueOf(KeyEvent.VK_SHIFT), tempo = "2500";
 
-    public void saveConfig(){
+    void saveConfig(){
         prop.setProperty("Note_C", noteC);
         prop.setProperty("Note_Cs", noteCs);
         prop.setProperty("Note_D", noteD);
@@ -27,20 +28,24 @@ public class Config {
         prop.setProperty("Note_Bb", noteB);
         prop.setProperty("Note_B", noteBb);
         prop.setProperty("Note_C1", noteC1);
-        prop.setProperty("DecreaseOctave", decreseOctave);
+        prop.setProperty("DecreaseOctave", decreaseOctave);
         prop.setProperty("IncreaseOctave", increaseOctave);
         prop.setProperty("Tempo", tempo);
 
-        try{
-            prop.store(new FileOutputStream("config.cfg"), null);
+        try {
+            prop.store(new FileOutputStream("Config.cfg"), null);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
-    public void load(){
+    void load(){
         try {
-            prop.load(new FileInputStream("config.cfg"));
+            prop.load(new FileInputStream("Config.cfg"));
+        } catch (FileNotFoundException e){
+            System.out.println(e.getLocalizedMessage());
+            return;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,7 +63,7 @@ public class Config {
         noteBb = prop.getProperty("Note_Bb");
         noteB = prop.getProperty("Note_B");
         noteC1 = prop.getProperty("Note_C1");
-        decreseOctave = prop.getProperty("DecreaseOctave");
+        decreaseOctave = prop.getProperty("DecreaseOctave");
         increaseOctave = prop.getProperty("IncreaseOctave");
         tempo = prop.getProperty("Tempo");
     }
