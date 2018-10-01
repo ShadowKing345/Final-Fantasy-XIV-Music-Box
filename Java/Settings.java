@@ -8,36 +8,28 @@ import java.awt.event.MouseEvent;
 
 class Settings extends JPanel{
 
-    static Config config = new Config();
-    static int[] keyCodes = {KeyEvent.VK_Q, KeyEvent.VK_2, KeyEvent.VK_W, KeyEvent.VK_3, KeyEvent.VK_E, KeyEvent.VK_R, KeyEvent.VK_5, KeyEvent.VK_T, KeyEvent.VK_6, KeyEvent.VK_Y, KeyEvent.VK_7, KeyEvent.VK_U, KeyEvent.VK_I, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT};
-    static KeyBindComponent[] keyBinds = {new KeyBindComponent("Note C", keyCodes[0]), new KeyBindComponent("Note Cs", keyCodes[1]), new KeyBindComponent("Note D", keyCodes[2]), new KeyBindComponent("Note Eb", keyCodes[3]),
-            new KeyBindComponent("Note E", keyCodes[4]), new KeyBindComponent("Note F", keyCodes[5]), new KeyBindComponent("Note Fs", keyCodes[6]), new KeyBindComponent("Note G", keyCodes[7]),
-            new KeyBindComponent("Note Gs", keyCodes[8]), new KeyBindComponent("Note A", keyCodes[9]), new KeyBindComponent("Note Bb", keyCodes[10]), new KeyBindComponent("Note B", keyCodes[11]),
-            new KeyBindComponent("Note C+1", keyCodes[12]), new KeyBindComponent("-1 Octave", keyCodes[13]), new KeyBindComponent("+1 Octave", keyCodes[14])};
+    static KeyBindComponent[] keyBinds = {new KeyBindComponent("Note C", KeyEvent.VK_Q), new KeyBindComponent("Note Cs", KeyEvent.VK_2), new KeyBindComponent("Note D", KeyEvent.VK_W), new KeyBindComponent("Note Eb", KeyEvent.VK_3),
+            new KeyBindComponent("Note E", KeyEvent.VK_E), new KeyBindComponent("Note F", KeyEvent.VK_R), new KeyBindComponent("Note Fs", KeyEvent.VK_5), new KeyBindComponent("Note G", KeyEvent.VK_T),
+            new KeyBindComponent("Note Gs", KeyEvent.VK_6), new KeyBindComponent("Note A", KeyEvent.VK_Y), new KeyBindComponent("Note Bb", KeyEvent.VK_7), new KeyBindComponent("Note B", KeyEvent.VK_U),
+            new KeyBindComponent("Note C+1", KeyEvent.VK_I), new KeyBindComponent("-1 Octave", KeyEvent.VK_CONTROL), new KeyBindComponent("+1 Octave", KeyEvent.VK_SHIFT)};
     JLabel tempoLabel = new JLabel("Tempo");
     JTextField tempoField = new JTextField();
     int tempo = 2500;
     JButton save = new JButton("Save");
 
     Settings() {
-        this.setConfig();
+        this.setFromConfig();
         this.setLayout(null);
         keyBinds[0].setBounds(3,3, 200, 40);
-        keyBinds[1].setBounds(keyBinds[0].getLabel().getX(),keyBinds[0].getLabel().getY() + keyBinds[0].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[2].setBounds(keyBinds[1].getLabel().getX(),keyBinds[1].getLabel().getY() + keyBinds[1].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[3].setBounds(keyBinds[2].getLabel().getX(),keyBinds[2].getLabel().getY() + keyBinds[2].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[4].setBounds(keyBinds[3].getLabel().getX(),keyBinds[3].getLabel().getY() + keyBinds[3].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[5].setBounds(keyBinds[4].getLabel().getX(),keyBinds[4].getLabel().getY() + keyBinds[4].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[6].setBounds(keyBinds[5].getLabel().getX(),keyBinds[5].getLabel().getY() + keyBinds[5].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[7].setBounds(keyBinds[6].getLabel().getX(),keyBinds[6].getLabel().getY() + keyBinds[6].getLabel().getHeight() + 3, 200, 40);
 
-        keyBinds[8].setBounds(keyBinds[0].getButton().getX() + keyBinds[0].getButton().getWidth() + 20,keyBinds[0].getButton().getY(), 200, 40);
-        keyBinds[9].setBounds(keyBinds[8].getLabel().getX(),keyBinds[8].getLabel().getY() + keyBinds[8].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[10].setBounds(keyBinds[9].getLabel().getX(),keyBinds[9].getLabel().getY() + keyBinds[9].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[11].setBounds(keyBinds[10].getLabel().getX(),keyBinds[10].getLabel().getY() + keyBinds[10].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[12].setBounds(keyBinds[11].getLabel().getX(),keyBinds[11].getLabel().getY() + keyBinds[11].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[13].setBounds(keyBinds[12].getLabel().getX(),keyBinds[12].getLabel().getY() + keyBinds[12].getLabel().getHeight() + 3, 200, 40);
-        keyBinds[14].setBounds(keyBinds[13].getLabel().getX(),keyBinds[13].getLabel().getY() + keyBinds[13].getLabel().getHeight() + 3, 200, 40);
+        for (int i = 1; i < keyBinds.length; i++) {
+            if (i == keyBinds.length / 2 + 1){
+                keyBinds[keyBinds.length / 2 + 1].setBounds(keyBinds[0].getButton().getX() + keyBinds[0].getButton().getWidth() + 20,keyBinds[0].getButton().getY(), 200, 40);
+                continue;
+            }
+            keyBinds[i].setBounds(keyBinds[i-1].getLabel().getX(),keyBinds[i-1].getLabel().getY() + keyBinds[i-1].getLabel().getHeight() + 3, 200, 40);
+        }
+
         tempoLabel.setBounds(keyBinds[14].getLabel().getX(),keyBinds[14].getLabel().getY() + keyBinds[14].getLabel().getHeight() + 3, 100, 40);
         tempoField.setBounds(keyBinds[14].getButton().getX(),tempoLabel.getY(), 200, 40);
         tempoField.setText(Integer.toString(tempo));
@@ -46,39 +38,14 @@ class Settings extends JPanel{
         save.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                saveToConfig();
             }
         });
 
-        this.add(keyBinds[0].getLabel());
-        this.add(keyBinds[0].getButton());
-        this.add(keyBinds[1].getLabel());
-        this.add(keyBinds[1].getButton());
-        this.add(keyBinds[2].getLabel());
-        this.add(keyBinds[2].getButton());
-        this.add(keyBinds[3].getLabel());
-        this.add(keyBinds[3].getButton());
-        this.add(keyBinds[4].getLabel());
-        this.add(keyBinds[4].getButton());
-        this.add(keyBinds[5].getLabel());
-        this.add(keyBinds[5].getButton());
-        this.add(keyBinds[6].getLabel());
-        this.add(keyBinds[6].getButton());
-        this.add(keyBinds[7].getLabel());
-        this.add(keyBinds[7].getButton());
-        this.add(keyBinds[8].getLabel());
-        this.add(keyBinds[8].getButton());
-        this.add(keyBinds[9].getLabel());
-        this.add(keyBinds[9].getButton());
-        this.add(keyBinds[10].getLabel());
-        this.add(keyBinds[10].getButton());
-        this.add(keyBinds[11].getLabel());
-        this.add(keyBinds[11].getButton());
-        this.add(keyBinds[12].getLabel());
-        this.add(keyBinds[12].getButton());
-        this.add(keyBinds[13].getLabel());
-        this.add(keyBinds[13].getButton());
-        this.add(keyBinds[14].getLabel());
-        this.add(keyBinds[14].getButton());
+        for (KeyBindComponent keyBind : keyBinds) {
+            this.add(keyBind.getLabel());
+            this.add(keyBind.getButton());
+        }
         this.add(tempoLabel);
         this.add(tempoField);
         this.add(save);
@@ -92,24 +59,48 @@ class Settings extends JPanel{
         }
     }
 
-    private void setConfig() {
-        config.load();
-        keyCodes[0] = Integer.parseInt(config.noteC);
-        keyCodes[1] = Integer.parseInt(config.noteCs);
-        keyCodes[2] = Integer.parseInt(config.noteD);
-        keyCodes[3] = Integer.parseInt(config.noteEb);
-        keyCodes[4] = Integer.parseInt(config.noteE);
-        keyCodes[5] = Integer.parseInt(config.noteF);
-        keyCodes[6] = Integer.parseInt(config.noteFs);
-        keyCodes[7] = Integer.parseInt(config.noteG);
-        keyCodes[8] = Integer.parseInt(config.noteGs);
-        keyCodes[9] = Integer.parseInt(config.noteA);
-        keyCodes[10] = Integer.parseInt(config.noteBb);
-        keyCodes[11] = Integer.parseInt(config.noteB);
-        keyCodes[12] = Integer.parseInt(config.noteC1);
-        keyCodes[13] = Integer.parseInt(config.decreseOctave);
-        keyCodes[14] = Integer.parseInt(config.increaseOctave);
-        tempo = Integer.parseInt(config.tempo);
+    private void setFromConfig() {
+        References.config.load();
+        keyBinds[0].setKeyCode(Integer.parseInt(References.config.noteC));
+        keyBinds[1].setKeyCode(Integer.parseInt(References.config.noteCs));
+        keyBinds[2].setKeyCode(Integer.parseInt(References.config.noteD));
+        keyBinds[3].setKeyCode(Integer.parseInt(References.config.noteEb));
+        keyBinds[4].setKeyCode(Integer.parseInt(References.config.noteE));
+        keyBinds[5].setKeyCode(Integer.parseInt(References.config.noteF));
+        keyBinds[6].setKeyCode(Integer.parseInt(References.config.noteFs));
+        keyBinds[7].setKeyCode(Integer.parseInt(References.config.noteG));
+        keyBinds[8].setKeyCode(Integer.parseInt(References.config.noteGs));
+        keyBinds[9].setKeyCode(Integer.parseInt(References.config.noteA));
+        keyBinds[10].setKeyCode(Integer.parseInt(References.config.noteB));
+        keyBinds[11].setKeyCode(Integer.parseInt(References.config.noteBb));
+        keyBinds[12].setKeyCode(Integer.parseInt(References.config.noteC1));
+        keyBinds[13].setKeyCode(Integer.parseInt(References.config.decreaseOctave));
+        keyBinds[14].setKeyCode(Integer.parseInt(References.config.increaseOctave));
+        tempo = Integer.parseInt(References.config.tempo);
+
+        for (int i = 0; i < keyBinds.length; i++)
+            keyBinds[i].updateText();
+        tempoField.setText(String.valueOf(tempo));
+    }
+
+    private void saveToConfig() {
+        References.config.noteC = String.valueOf(keyBinds[0].getKeyCode());
+        References.config.noteCs = String.valueOf(keyBinds[1].getKeyCode());
+        References.config.noteD = String.valueOf(keyBinds[2].getKeyCode());
+        References.config.noteEb = String.valueOf(keyBinds[3].getKeyCode());
+        References.config.noteE = String.valueOf(keyBinds[4].getKeyCode());
+        References.config.noteF = String.valueOf(keyBinds[5].getKeyCode());
+        References.config.noteFs = String.valueOf(keyBinds[6].getKeyCode());
+        References.config.noteG = String.valueOf(keyBinds[7].getKeyCode());
+        References.config.noteGs = String.valueOf(keyBinds[8].getKeyCode());
+        References.config.noteA = String.valueOf(keyBinds[9].getKeyCode());
+        References.config.noteB = String.valueOf(keyBinds[10].getKeyCode());
+        References.config.noteBb = String.valueOf(keyBinds[11].getKeyCode());
+        References.config.noteC1 = String.valueOf(keyBinds[12].getKeyCode());
+        References.config.decreaseOctave = String.valueOf(keyBinds[13].getKeyCode());
+        References.config.increaseOctave = String.valueOf(keyBinds[14].getKeyCode());
+        References.config.tempo = String.valueOf(tempo);
+        References.config.saveConfig();
     }
 
     static class KeyBindComponent {
@@ -153,6 +144,10 @@ class Settings extends JPanel{
             button.setBounds(x +  width / 2 + 3, y, width, height);
         }
 
+        public void setKeyCode(int code) {
+            this.keyCode = code;
+        }
+
         public void setLocation(int x, int y) {
             label.setLocation(x, y);
             button.setLocation(x + label.getWidth() + 3, y);
@@ -168,12 +163,20 @@ class Settings extends JPanel{
             button.setFont(font);
         }
 
+        public void updateText() {
+            this.button.setText(KeyEvent.getKeyText((int) this.keyCode));
+        }
+
         public JLabel getLabel() {
             return label;
         }
 
         public JButton getButton() {
             return button;
+        }
+
+        public Object getKeyCode() {
+            return keyCode;
         }
     }
 
