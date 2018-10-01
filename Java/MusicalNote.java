@@ -73,11 +73,15 @@ public class MusicalNote {
 
             if (string.contains("Note:")) {
                 int noteIn = string.indexOf("Note:");
-                note = string.substring(noteIn + noteLength + 2, noteIn + noteLength + 3);
+                note = string.substring(noteIn + noteLength, noteIn + noteLength + 2);
+                if (note.contains(" "))
+                    note = note.substring(0, note.lastIndexOf(' '));
             }
             if(string.contains("Octave:")) {
                 int octaveIn = string.indexOf("Octave:");
                 octave = string.substring(octaveIn + octaveLength, octaveIn + octaveLength + 2);
+                if (octave.contains(" "))
+                    octave = octave.substring(0, octave.lastIndexOf(" "));
             }
             if (string.contains("Hold:")) {
                 int holdIn = string.indexOf("Hold:");
