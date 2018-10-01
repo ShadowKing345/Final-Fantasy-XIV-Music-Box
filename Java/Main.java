@@ -47,9 +47,9 @@ public class Main extends JFrame{
         content.setFont(new Font(References.font.getName(), References.font.getStyle(), 12));
         content.add(display);
         content.add(setting);
-        content.setBackgroundAt(0, References.innerPannelCol);
+        content.setBackgroundAt(0, References.innerPanelCol);
         content.setForegroundAt(0, References.textCol);
-        content.setBackgroundAt(1, References.innerPannelCol);
+        content.setBackgroundAt(1, References.innerPanelCol);
         content.setForegroundAt(1, References.textCol);
         content.setTitleAt(0, "Display");
         content.setTitleAt(1, "Settings");
