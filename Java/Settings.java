@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@Deprecated
 class Settings extends JPanel{
 
     static KeyBindComponent[] keyBinds = {new KeyBindComponent("Note C", KeyEvent.VK_Q), new KeyBindComponent("Note Cs", KeyEvent.VK_2), new KeyBindComponent("Note D", KeyEvent.VK_W), new KeyBindComponent("Note Eb", KeyEvent.VK_3),
@@ -19,15 +20,16 @@ class Settings extends JPanel{
 
     Settings() {
         this.setFromConfig();
+        this.setBackground(References.innerPanelCol);
         this.setLayout(null);
-        keyBinds[0].setBounds(3,3, 200, 40);
+        keyBinds[0].setBounds(3,3, References.buttonSize.width, References.buttonSize.height);
 
         for (int i = 1; i < keyBinds.length; i++) {
             if (i == keyBinds.length / 2 + 1){
-                keyBinds[keyBinds.length / 2 + 1].setBounds(keyBinds[0].getButton().getX() + keyBinds[0].getButton().getWidth() + 20,keyBinds[0].getButton().getY(), 200, 40);
+                keyBinds[keyBinds.length / 2 + 1].setBounds(keyBinds[0].getButton().getX() + keyBinds[0].getButton().getWidth() + 20,keyBinds[0].getButton().getY(), References.buttonSize.width, References.buttonSize.height);
                 continue;
             }
-            keyBinds[i].setBounds(keyBinds[i-1].getLabel().getX(),keyBinds[i-1].getLabel().getY() + keyBinds[i-1].getLabel().getHeight() + 3, 200, 40);
+            keyBinds[i].setBounds(keyBinds[i-1].getLabel().getX(),keyBinds[i-1].getLabel().getY() + keyBinds[i-1].getLabel().getHeight() + 3, References.buttonSize.width, References.buttonSize.height);
         }
 
         tempoLabel.setBounds(keyBinds[14].getLabel().getX(),keyBinds[14].getLabel().getY() + keyBinds[14].getLabel().getHeight() + 3, 100, 40);
@@ -43,6 +45,7 @@ class Settings extends JPanel{
         });
 
         for (KeyBindComponent keyBind : keyBinds) {
+
             this.add(keyBind.getLabel());
             this.add(keyBind.getButton());
         }
