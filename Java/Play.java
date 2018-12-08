@@ -20,7 +20,7 @@ public class Play extends Thread {
         {
             try {
                 robot = new Robot();
-                String filePath = Main.fileLocation.getText();
+                String filePath = Main_Old.fileLocation.getText();
                 if (!Load.VerifyFile(filePath)) {
                     Play.setStop(true);
                     return;
