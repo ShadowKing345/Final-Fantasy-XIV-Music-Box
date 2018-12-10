@@ -57,10 +57,8 @@ public class MusicalNote {
     public static MusicalNote parse(String string){
         try {
             JSONObject j = new JSONObject(string);
-            return new MusicalNote(j.getString("Note"), j.getString("Octave"), j.getInt("Wait"), j.getInt("PostWait"));
+            return new MusicalNote(j.getString("Note"), j.getString("Octave"), j.getInt("Hold"), j.getInt("PostWait"));
         } catch (JSONException e) {
-            System.out.println("Not a json obj. Trying normal method");
-
             String note = "a";
             String octave = "00";
             int hold = 1;
