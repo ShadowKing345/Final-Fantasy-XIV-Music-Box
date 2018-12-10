@@ -1,6 +1,7 @@
 package Java;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,28 +9,47 @@ import java.io.File;
 public class ContentFrame extends JFrame {
 
     //Object declaration
-    GeneralActionHandler generalActionHandler = new GeneralActionHandler();
+    public GeneralActionHandler generalActionHandler;
+    public PlayActionHandler playActionHandler;
 
     //Menu Bar
-    public JMenuBar menuBar = new JMenuBar();
-    public JMenu fileMenu = new JMenu("File");
-    public JMenuItem settingMenuItem = new JMenuItem("Setting");
-    public JMenuItem loadMenuItem = new JMenuItem("Load");
-    public JMenuItem exitMenuItem = new JMenuItem("Exit");
-
-    public JMenu playMenu = new JMenu("Play");
-    public JMenuItem beginMenuItem = new JMenuItem("Begin");
-    public JMenuItem stopMenuItem = new JMenuItem("Stop");
-
-    public JSeparator separator = new JSeparator();
+    public JMenuBar menuBar;
+    public JMenu fileMenu;
+    public JMenuItemDesign settingMenuItem;
+    public JMenuItemDesign loadMenuItem;
+    public JMenuItem exitMenuItem;
+    public JMenu playMenu;
+    public JMenuItemDesign beginMenuItem;
+    public JMenuItemDesign stopMenuItem;
+    public JSeparator separator;
 
     //Panels
-    public JPanel contentPanel = new JPanel();
-    public DisplayPanel displayPanel = new DisplayPanel();
-    public DisplayButtonPanel displayButtonPanel = new DisplayButtonPanel();
-    public GeneralButtonPanel generalButtonPanel = new GeneralButtonPanel();
+    public JPanel contentPanel;
+    public DisplayPanel displayPanel;
+    public DisplayButtonPanel displayButtonPanel;
+    public GeneralButtonPanel generalButtonPanel;
 
     public ContentFrame() {
+        Initialization();
+    }
+
+    private void Initialization() {
+        generalActionHandler = new GeneralActionHandler();
+        playActionHandler = new PlayActionHandler();
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+        settingMenuItem = new JMenuItemDesign(generalActionHandler,"Setting");
+        loadMenuItem = new JMenuItemDesign(generalActionHandler,"Load");
+        exitMenuItem = new JMenuItemDesign(generalActionHandler,"Exit");
+        playMenu = new JMenu("play");
+        beginMenuItem = new JMenuItemDesign(playActionHandler,"Begin");
+        stopMenuItem = new JMenuItemDesign(playActionHandler,"Stop");
+        separator = new JSeparator();
+        contentPanel = new JPanel();
+        displayPanel = new DisplayPanel();
+        displayButtonPanel = new DisplayButtonPanel();
+        generalButtonPanel = new GeneralButtonPanel();
+
         //this properties
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(References.size);
@@ -41,15 +61,13 @@ public class ContentFrame extends JFrame {
         this.setJMenuBar(menuBar);
         //File
         menuBar.add(fileMenu);
+
         fileMenu.add(settingMenuItem);
-        settingMenuItem.addActionListener(generalActionHandler);
         fileMenu.add(loadMenuItem);
-        loadMenuItem.addActionListener(generalActionHandler);
         fileMenu.add(separator);
         fileMenu.add(exitMenuItem);
-        exitMenuItem.addActionListener(generalActionHandler);
 
-        //Play
+        //play
         menuBar.add(playMenu);
         playMenu.add(beginMenuItem);
         playMenu.add(stopMenuItem);
@@ -63,11 +81,19 @@ public class ContentFrame extends JFrame {
     }
 
     class DisplayPanel extends JPanel {
-        JLabel fileLocationLabel = new JLabel("File Directory: ");
-        JTextField fileLocationTextField = new JTextField();
-        JButton loadFileButton = new JButton();
+        JLabel fileLocationLabel;
+        JTextField fileLocationTextField;
+        JButton loadFileButton;
 
         public DisplayPanel() {
+            Initialization();
+        }
+
+        void Initialization() {
+            fileLocationLabel = new JLabel("File Directory: ");
+            fileLocationTextField = new JTextField();
+            loadFileButton = new JButtonDesign(generalActionHandler, References.buttonBackgroundColor, "", new Dimension(25,25));
+
             //This properties
             this.setLocation(3,3);
             this.setSize(409, 268);
@@ -86,19 +112,25 @@ public class ContentFrame extends JFrame {
 
             //Load_File_Button properties
             loadFileButton.setLocation(381,3);
-            loadFileButton.setSize(25,25);
-            loadFileButton.setBorder(null);
-            loadFileButton.addActionListener(generalActionHandler);
             this.add(loadFileButton);
+
+            //todo: Create "play" area
         }
     }
 
     class DisplayButtonPanel extends JPanel {
         //Object declarations
-        JButton beginButton = new JButton("Begin");
-        JButton stopButton = new JButton("Stop");
+        JButton beginButton;
+        JButton stopButton;
 
         public DisplayButtonPanel() {
+            Initialization();
+        }
+
+        void Initialization(){
+            beginButton = new JButtonDesign(playActionHandler,References.buttonBackgroundColor,"Begin",new Dimension(200,50));
+            stopButton = new JButtonDesign(playActionHandler,References.buttonBackgroundColor,"Stop",new Dimension(200,50));
+
             //This properties
             this.setLayout(null);
             this.setLocation(3,276);
@@ -106,56 +138,48 @@ public class ContentFrame extends JFrame {
             this.setBackground(References.panelColor);
 
             //Begin_Button Properties
-            beginButton.setSize(200, 50);
             beginButton.setLocation(3,3);
-            beginButton.setBorder(null);
-            beginButton.setBackground(References.buttonBackgroundColor);
             this.add(beginButton);
 
             //Stop_Button Properties
-            stopButton.setSize(200,50);
             stopButton.setLocation(206,3);
-            stopButton.setBorder(null);
-            stopButton.setBackground(References.buttonBackgroundColor);
             this.add(stopButton);
         }
     }
 
-    class GeneralButtonPanel extends JPanel{
+    class GeneralButtonPanel extends JPanel {
         //Object declarations
-        JButton settingsButton = new JButton("Settings");
-        JButton loadButton = new JButton("Load");
-        JButton exitButton  = new JButton("Exit");
+        JButton settingsButton;
+        JButton loadButton;
+        JButton exitButton;
 
         public GeneralButtonPanel() {
+            Initialization();
+        }
+
+        void Initialization() {
+            settingsButton = new JButtonDesign(generalActionHandler,References.buttonBackgroundColor,"Setting", new Dimension(150,50));
+            loadButton = new JButtonDesign(generalActionHandler,References.buttonBackgroundColor,"Load", new Dimension(150,50));
+            exitButton = new JButtonDesign(generalActionHandler,References.buttonBackgroundColor,"Exit", new Dimension(150,50));
+
             //This properties
             this.setLocation(415, 3);
             this.setSize(References.actualSize.width - this.getX() - 3,268);
             this.setLayout(null);
             this.setBackground(References.panelColor);
 
+            //todo: Create metronome
+
             //Settings properties
-            settingsButton.setSize(150, 50);
             settingsButton.setLocation(3, 103);
-            settingsButton.setBorder(null);
-            settingsButton.setBackground(References.buttonBackgroundColor);
-            settingsButton.addActionListener(generalActionHandler);
             this.add(settingsButton);
 
             //Load_Button properties
-            loadButton.setSize(150,50);
             loadButton.setLocation(3,159);
-            loadButton.setBorder(null);
-            loadButton.setBackground(References.buttonBackgroundColor);
-            loadButton.addActionListener(generalActionHandler);
             this.add(loadButton);
 
             //Exit_Button properties
-            exitButton.setSize(150,50);
             exitButton.setLocation(3,this.getHeight() - exitButton.getHeight() -3);
-            exitButton.setBorder(null);
-            exitButton.setBackground(References.buttonBackgroundColor);
-            exitButton.addActionListener(generalActionHandler);
             this.add(exitButton);
         }
     }
@@ -164,7 +188,7 @@ public class ContentFrame extends JFrame {
 
         JFileChooser fileChooser = new JFileChooser();
 
-        @Override
+        //@Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == Main.frame.exitMenuItem || e.getSource() == Main.frame.generalButtonPanel.exitButton) {
                 Main.closingArguments();
@@ -173,6 +197,8 @@ public class ContentFrame extends JFrame {
                 if(fileChooser.showOpenDialog(Main.frame) == 0){
                     Main.frame.displayPanel.fileLocationTextField.setText(fileChooser.getSelectedFile().toString());
                 }
+            }else if (e.getSource() == Main.frame.generalButtonPanel.settingsButton || e.getSource() == Main.frame.settingMenuItem) {
+                //todo: Create settings form
             }
 
         }
@@ -180,11 +206,40 @@ public class ContentFrame extends JFrame {
 
     class PlayActionHandler implements ActionListener {
 
+        Thread testThread = new Thread(){
+            public void run() {
+                Play.play(5000, Main.frame.displayPanel.fileLocationTextField.getText());
+            }
+        };
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Todo: add functions
+            if (e.getSource() == Main.frame.beginMenuItem || e.getSource() == Main.frame.displayButtonPanel.beginButton) {
+                if (Main.frame.displayPanel.fileLocationTextField.getText().equals(""))
+                    return;
+                //Todo:Find a better location for this thread;
+                testThread.run();
+            } else if (e.getSource() == Main.frame.stopMenuItem || e.getSource() == Main.frame.displayButtonPanel.stopButton) {
+                try {
+                    //Todo: Add a way to stop the thread.
+                }catch (Exception ignored){}
+            }
         }
     }
 
-
+    class JButtonDesign extends JButton {
+        JButtonDesign(ActionListener listener, Color color, String text, Dimension size) {
+            super(text);
+            this.setSize(size);
+            this.setBorder(null);
+            this.setBackground(color);
+            this.addActionListener(listener);
+        }
+    }
+    class JMenuItemDesign extends JMenuItem {
+        JMenuItemDesign(ActionListener handler, String text) {
+            super(text);
+            this.addActionListener(handler);
+        }
+    }
 }
